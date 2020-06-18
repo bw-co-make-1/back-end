@@ -1,1 +1,619 @@
-# back-end
+# Documentation for the Co-Make API
+
+### End points
+```
+[Server status](#server-status)
+[Register](#register)
+[Login](#login)
+```
+### <a name="server-status"></a> Server Status
+
+http://bw-co-make-1.herokuapp.com/
+Is the server live?
+
+### <a name="register"></a> Register
+
+| Method | Endpoint                               | Response Code |
+| ------ | -------------------------------------- | ------------- |
+| POST | /api/auth/register | 201 - Created |
+
+Expects an object with the following:
+
+- username
+- email
+- city
+- state
+- zip_code
+
+Example:
+```js
+{
+  "username": string,
+  "email": string,
+  "first_name": string,
+  "last_name": string,
+  "city": string,
+  "state": string,
+  "zip_code": integer,
+  "is_admin": boolean
+}
+```
+
+Returns 201 status and the newly created user object:
+
+```json
+{
+  "token": "super-secret-token",
+  "user": {
+    "id": 5,
+    "first_name": "Wade",
+    "last_name": "Wilson",
+    "username": "Deadpool",
+    "email": "imnotwade@email.com",
+    "city": "New York",
+    "state": "New York",
+    "zip_code": 10036,
+    "is_admin": 0
+  }
+}
+```
+
+### <a name="login"></a> Login
+
+| Method | Endpoint                               | Response Code |
+| ------ | -------------------------------------- | ------------- |
+| POST | /api/auth/login | 200 - Success |
+
+Expects an Object:
+
+Required:
+
+- username
+- password
+
+```json
+{
+  "username": "username",
+  "password": "password"
+}
+```
+
+returns a 200 SUCCESS Status and the user object:
+
+```json
+{
+  "token": "super-secret-token",
+  "user": {
+    "id": 1,
+    "first_name": "First Name (test - user)",
+    "last_name": "Last Name (test - user)",
+    "username": "testUser",
+    "email": "testUser@email.com",
+    "city": "Chicago",
+    "state": "Illinois",
+    "zip_code": 60626,
+    "is_admin": 0,
+    "created_at": "2020-02-26 21:28:17"
+  }
+}
+```
+
+Returns a 401 FAILURE message when email and/or password do match records, along with the error "Invalid Credentials"
+
+# GET Get Users
+
+/api/users
+
+Restricted Route, must be logged in /_and an admin - not yet added_/ to access
+
+returns an array of user objects containing the
+
+- is_admin is a boolean where 0 === false and 1 === true
+
+```json
+[
+  {
+    "id": 1,
+    "username": "testUser",
+    "is_admin": 0
+  },
+  {
+    "id": 2,
+    "username": "testAdmin",
+    "is_admin": 1
+  }
+]
+```
+
+# GET Get User By ID
+
+/api/users/1
+Must be logged in and provide a valid user id
+
+Returns
+
+```json
+{
+  "id": 2,
+  "first_name": "First Name (test - admin)",
+  "last_name": "Last Name (test - admin)",
+  "username": "testAdmin",
+  "email": "testAdmin@email.com",
+  "city": "Chicago",
+  "state": "Illinois",
+  "zip_code": 60619,
+  "is_admin": 1,
+  "created_at": "2020-02-27 03:27:46"
+}
+```
+
+# PUT Update a User
+
+/api/users/3
+
+Update an existing user, must be logged in and provide an existing username
+
+returns the updated user object
+
+```json
+{
+  "id": 3,
+  "first_name": "First Name (test - new user2)",
+  "last_name": "Last Name (test - new user2)",
+  "username": "updatedUserName",
+  "email": "newUser@email.com",
+  "city": "Chicago",
+  "state": "Illinois",
+  "zip_code": 60611,
+  "is_admin": 0,
+  "created_at": "2020-02-27 05:57:04"
+}
+```
+
+# DEL Delete a user
+
+/api/users/3
+
+Must be logged in and provide a valid user id
+
+Returns the number of records removed
+
+```json
+{
+  "removed": 1
+}
+```
+
+# GET Get all issues
+
+/api/users/<user.id>/issues
+
+Must be logged in and provide a valid user id
+
+Returns an array of all issue objects
+
+```json
+[
+  {
+    "id": 1,
+    "issue": "pothole",
+    "issue_description": "I'm an issue description",
+    "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+    "hazard_level": "Severe Hazard",
+    "city": "Chicago",
+    "state": "Illinois",
+    "zip_code": 60649,
+    "upvotes": 364235,
+    "user_id": 1,
+    "username": "testUser",
+    "created_at": "2020-02-28 02:33:46"
+  },
+  {
+    "id": 2,
+    "issue": "car crash",
+    "issue_description": "I'm an issue description",
+    "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+    "hazard_level": "Low Hazard",
+    "city": "Chicago",
+    "state": "Illinois",
+    "zip_code": 60619,
+    "upvotes": 3,
+    "user_id": 1,
+    "username": "testUser",
+    "created_at": "2020-02-28 02:33:46"
+  }
+]
+```
+
+# GET Get all issues for a specific user
+
+/api/users/<user.id>/issues/user
+
+Must be logged in and provide a valid user id
+
+Returns an array of all issue objects posted by given user
+
+```json
+[
+  {
+    "issue": {
+        "id": 1,
+        "issue": "pothole",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
+},
+{
+    "issue": {
+        "id": 2,
+        "issue": "pothole",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
+}
+]
+```
+
+# GET Get an Issue by id
+
+/api/users/<user.id>/issues/<issue.id>
+
+Must be logged in
+
+Required
+
+- valid issue id
+- valid user id
+
+Returns issue object with specified id
+
+```json
+{
+    "issue": {
+        "id": 1,
+        "issue": "pothole",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
+}
+```
+
+# POST Post a new issue
+
+/api/users/<user.id>/issues/
+
+Must be logged in
+
+Must provide:
+
+- valid user id
+- issue (ex: pothole)
+- issue_description
+- city
+- state
+- zip_code
+- hazard_level 
+    Must submit as a number where: 
+    - 1 is Severe Hazard
+    - 2 is Moderate Hazard 
+    - 3 is Low Hazard
+
+Returns newly created issue object
+
+```json
+{
+    "issue": {
+        "id": 1,
+        "issue": "pothole",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
+}
+```
+
+# PUT Update an issue
+
+/api/users/<user.id>/issues/<issue.id>
+
+Must be logged in
+
+Required:
+
+- a valid user id
+- a valid issue id
+- user must be original poster
+
+Returns updated issue object
+
+```json
+{
+    "issue": {
+        "id": 1,
+        "issue": "pothole UPDATED",
+        "issue_description": "I'm an UPDATED issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
+}
+```
+
+# DEL Delete an issue
+
+/api/users/<user.id>/issues/<issue.id>
+
+Must be logged in
+
+Required:
+
+- a valid user id
+- a valid issue id
+- user must be original poster
+
+Returns the number of records deleted
+
+```json
+{
+  "removed": 1
+}
+```
+
+# Post Upvote
+
+/api/users/<user.id>/issues/<issue.id>/upvotes
+
+Must be logged in
+
+Required:
+
+- a valid user id
+- a valid issue id
+
+On Success returns a 201 status and:
+```json
+  {
+      "upvote_id": 4
+  }
+```
+
+On Failure returns a 400 and:
+```json
+  {
+      "message": "User with the id of 1 has already upvoted issue with id of 2"
+  }
+```
+
+# Delete Upvote
+
+/api/users/<user.id>/issues/<issue.id>/upvotes/<upvote_id>
+
+Must be logged in
+
+Required:
+
+- a valid user id
+- a valid issue id
+
+On Success returns a 200 status and:
+```json
+  {
+    "removed": 1
+  }
+```
+
+On Failure returns a 400 and:
+```json
+  {
+      "message": "User with the id of 1 has already upvoted issue with id of 2"
+  }
+```
+
+# GET Get All Comments For A Given Issue
+
+/api/users/<user.id>/issues/<issue.id>/comments
+
+Returns an array of comments:
+
+```json
+[
+  {
+    "id": 1,
+    "user_id": 1,
+    "username": "testUser",
+    "issue_id": 1,
+    "issue": "pothole",
+    "comment": "I'm the first comment."
+  },
+  {
+    "id": 2,
+    "user_id": 1,
+    "username": "testUser",
+    "issue_id": 1,
+    "issue": "pothole",
+    "comment": "I'm the second comment."
+  },
+  {
+    "id": 3,
+    "user_id": 1,
+    "username": "testUser",
+    "issue_id": 1,
+    "issue": "pothole",
+    "comment": "I'm the third comment."
+  }
+]
+```
+
+# GET Get Comment By Id
+
+/api/users/<user.id>/issues/<issue.id>/comments/<comment.id>
+
+Must be logged in and provide a valid comment id
+
+Returns a single comment object
+
+```json
+{
+  "id": 3,
+  "user_id": 1,
+  "username": "testUser",
+  "issue_id": 1,
+  "issue": "pothole",
+  "comment": "I'm the third comment."
+}
+```
+
+# POST Post a new comment
+
+/api/users/<user.id>/issues/<issues.id>/comments/
+
+Must be logged in
+
+Required:
+
+- comment body
+
+Returns the new comment:
+
+```json
+{
+  "id": 4,
+  "user_id": 2,
+  "username": "testAdmin",
+  "issue_id": 2,
+  "issue": "car crash",
+  "comment": "I'm a new comment",
+  "created_at": "2020-02-27 04:17:26"
+}
+```
+
+# PUT Update a comment
+
+/api/users/<user.id>/issues/<issues.id>/comments/<comment.id>
+
+Must be logged in
+
+Required
+
+- valid comment id
+- must be creator of comment
+
+Returns the updated comment object
+
+```json
+{
+  "id": 4,
+  "user_id": 2,
+  "username": "testAdmin",
+  "issue_id": 2,
+  "issue": "car crash",
+  "comment": "I'm a newly added comment that has been updated",
+  "created_at": "2020-02-27 06:04:58"
+}
+```
+
+# DEL Delete a comment
+
+/api/users/<user.id>/issues/<issues.id>/comments/<comment.id>
+
+Must be logged in
+
+Required
+
+- valid comment id
+- must be creator of comment
+
+Returns the number of records removed
+
+```json
+{
+  "removed": 1
+}
+```
