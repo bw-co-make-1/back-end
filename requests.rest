@@ -1,0 +1,18 @@
+POST https://co-make1.herokuapp.com/api/Register
+Content-Type: application/json
+
+{
+"username": "Amin", "password": "Amin"
+}
+
+###
+POST http://localhost:5000/api/Login
+Content-Type: application/json
+
+{
+"username": "admin", "password": "admin"
+}
+
+###
+GET http://localhost:5000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoyLCJ1c2VybmFtZSI6ImFkbWluIiwiZmlyc3RfbmFtZSI6IldlbGNvbWUgQWRtaW4iLCJpc19hZG1pbiI6MSwiaWF0IjoxNTkyNDYxMzQzLCJleHAiOjE1OTI2MzQxNDN9.xzUQdrtzGPz76xxnBoMdejxXWov8mCzbL1XOXZo3tNc

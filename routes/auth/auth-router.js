@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Users = require('./auth-model.js')
-const JwToken = require('../config/jwToken.js')
+const JwToken = require('../../config/jwToken.js')
 const bcrypt = require('bcryptjs')
 
 router.post('/Register', async (req, res) => {
@@ -11,7 +11,6 @@ router.post('/Register', async (req, res) => {
     const newUser = await Users.addUser(user)
     if (newUser) {
       res.status(201).json('New User added')
-
     } else {
       res.status(404).json('Unable to add new User')
     }
