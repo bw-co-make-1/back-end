@@ -2,10 +2,8 @@ const router = require("express").Router()
 const Votes = require("../models/votes-model")
 
 
-router.get("/votes/", ( req, res ) => {
-
+router.get("/:postId", ( req, res ) => {
+    res.status(200).json({ message: "route is working." })
 })
 
-router.post("/votes/", ( req, res ) => {
-
-})
+module.exports = router
