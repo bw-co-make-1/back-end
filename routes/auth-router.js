@@ -1,9 +1,9 @@
 const bcryptjs = require("bcryptjs")
 const router = require("express").Router()
 const jwt = require('jsonwebtoken')
-const secrets = require('../../config/secrets')
+const secrets = require('../config/secrets')
 const Users = require("../models/users-model")
-const { isValid } = require("../../middleware/mw-users-service")
+const { isValid } = require("../middleware/mw-users-service")
 
 
 router.post("/register", (req, res) => {
