@@ -2,11 +2,11 @@ const express = require("express")
 const helmet = require("helmet")
 const cors = require("cors")
 
-const authRouter = require("../routes/auth/auth-router")
-const usersRouter = require("../routes/users/users-router")
-const postsRouter = require("../routes/posts/posts-router")
-const commentsRouter = require("../routes/comments/comments-router")
-const votesRouter = require("../routes/votes/votes-router")
+const authRouter = require("../routes/auth-router")
+const usersRouter = require("../routes/users-router")
+const postsRouter = require("../routes/posts-router")
+const commentsRouter = require("../routes/comments-router")
+const votesRouter = require("../routes/votes-router")
 
 const server = express()
 
