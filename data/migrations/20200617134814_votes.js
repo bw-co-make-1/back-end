@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-    await knex.schema.createTable("votes", tbl => {
+    knex.schema.createTable("votes", tbl => {
         tbl.increments()
         tbl.integer("userId").notNullable()
         tbl.integer("postId").unsigned().notNullable()
@@ -9,6 +9,6 @@ exports.up = function(knex) {
     })
 }
 
-exports.down = async function( knex ) {
-    await knex.schema.dropTableIfExists("votes")
+exports.down = function( knex ) {
+    knex.schema.dropTableIfExists("votes")
 }

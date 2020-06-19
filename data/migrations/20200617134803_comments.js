@@ -1,5 +1,5 @@
 exports.up = function( knex ) {
-    await knex.schema.createTable("comments", tbl => {
+    knex.schema.createTable("comments", tbl => {
         tbl.increments()
         tbl.text("text", 500).notNullable()
         tbl.string("username").notNullable()
@@ -12,6 +12,6 @@ exports.up = function( knex ) {
     })
 }
 
-exports.down = async function( knex ) {
-    await knex.schema.dropTableIfExists("comments")
+exports.down = function( knex ) {
+    knex.schema.dropTableIfExists("comments")
 }
