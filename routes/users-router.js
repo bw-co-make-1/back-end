@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const Users = require("./users-model")
-const restricted = require("../../middleware/mw-restricted")
+const restricted = require("../middleware/mw-restricted")
 const checkRole = require('../auth/check-role-middleware')
 
 
