@@ -1,7 +1,7 @@
 const router = require("express").Router()
-const Users = require("./users-model")
+const Users = require("./models/users-model")
 const restricted = require("../middleware/mw-restricted")
-const checkRole = require('../auth/check-role-middleware')
+const checkRole = require('../middleware/check-role-middleware')
 
 
 router.get("/users", restricted, checkRole(1), (req, res) => {
