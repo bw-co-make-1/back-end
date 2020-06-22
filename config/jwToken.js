@@ -12,7 +12,7 @@ function generateToken(user) {
         is_admin: user.is_admin
     }
     const options = {
-        expiresIn: "2d"
+        expiresIn: "7d"
     };
 
     return jwt.sign(payload, secret.jwtSecret, options)
