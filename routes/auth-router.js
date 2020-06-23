@@ -3,21 +3,22 @@ const router = require("express").Router()
 const jwt = require('jsonwebtoken')
 const secrets = require('../config/secrets')
 const Users = require("../models/users-model")
-const { isValid } = require("../middleware/mw-users-service")
+const { isValidReg, isValidLogin } = require("../middleware/mw-users-service")
+const { genToken } = require("../helpers/auth")
 
 
 router.post("/register", (req, res) => {
-  const credentials = req.body
+  const newUser = req.body
 
-  if (isValid(credentials)) {
+  if (isValidReg(newUser)) {
     const rounds = process.env.BCRYPT_ROUNDS || 8
-    const hash = bcryptjs.hashSync(credentials.password, rounds)
+    const hash = bcryptjs.hashSync(newUser.password, rounds)
 
-    credentials.password = hash
+    newUser.password = hash
 
-    Users.add(credentials)
+    Users.add(newUser)
       .then(user => {
-        const token = genToken(saved)
+        const token = genToken(user)
 
         res.status(201).json({ data: user, token })
       })
@@ -26,7 +27,7 @@ router.post("/register", (req, res) => {
       })
   } else {
     res.status(400).json({
-      message: "please provide username and password and the password should be alphanumeric",
+      message: "Please provide username, password, first name, last name, and email address.",
     })
   }
 })
@@ -34,11 +35,11 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { username, password } = req.body
 
-  if (isValid(req.body)) {
+  if (isValidLogin(req.body)) {
     Users.findBy({ username: username })
       .then(([user]) => {
         if (user && bcryptjs.compareSync(password, user.password)) {
-          const token = generateToken(user)
+          const token = genToken(user)
           
           res.status(200).json({
             message: "Welcome to our API",
@@ -53,23 +54,9 @@ router.post("/login", (req, res) => {
       })
   } else {
     res.status(400).json({
-      message: "please provide username and password and the password should be alphanumeric",
+      message: "Please provide a valid username and password.",
     })
   }
 })
-
-function generateToken(user) {
-  const payload = {
-    subject: user.id,
-    username: user.username,
-    role: user.role
-  }
-
-  const options = {
-    expiresIn: "2h"
-  }
-
-  return jwt.sign(payload, secrets.jwtSecret, options)
-}
 
 module.exports = router

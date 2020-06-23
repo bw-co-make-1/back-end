@@ -3,7 +3,7 @@ function makeCheckRoleMiddleware(role) {
         if (req.decodedJwt.role && req.decodedJwt.role === role) {
             next()
         } else {
-            res.status(403).json({ you: 'do not have the power' })
+            res.status(403).json({ message: "You are not authorized." })
         }
     }
 }
