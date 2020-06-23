@@ -20,11 +20,6 @@ server.use("/api/posts", postsRouter)
 server.use("/api/comments", commentsRouter)
 server.use("/api/votes", votesRouter)
 
-// server.use(( req, res ) => {
-//   res.status(500).json({
-//     message: "There was an internal server error."
-//   })
-// })
 
 server.get("/", ( req, res ) => {
   res.json({ message: "The API server is live." })
