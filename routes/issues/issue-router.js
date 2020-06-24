@@ -53,7 +53,7 @@ router.delete('/:id', isAdmin(1),async(req,res)=>{
         res.status(500).json({message: 'Error removing issue'})
     }
 })
-
+//update
 router.put('/:id', async(req,res)=>{
     try{
         const {id} =req.params
