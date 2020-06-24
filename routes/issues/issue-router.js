@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Issues = require('./issue-model.js')
+const isAdmin = require('../../middleware/isAdmin.js')
 
 router.get('/', async (req, res) => {
    try{
@@ -21,6 +22,35 @@ router.post('/:userId', async(req, res)=>{
 
     }catch{
         res.status(500).json({message: 'Error posting new issue.'})
+    }
+})
+
+router.get('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const found = await Issues.byId(id)
+        if (found.length > 0) {
+            res.status(200).json(found)
+        } else {
+            res.status(404).json('No Issue found.')
+        }
+    }
+    catch{
+        res.status(500).json('Error loading issue.')
+    }
+})
+
+router.delete('/:id', isAdmin(1),async(req,res)=>{
+    try{
+        const {id} = req.params
+        const deleted = await Issues.deleteIssue(id)
+        if (deleted){
+            res.json({message: `Issued ${id} deleted`})
+        }else{
+            res.json({message:'Unable to remove issue.'})
+        }
+    }catch{
+        res.status(500).json({message: 'Error removing issue'})
     }
 })
 
