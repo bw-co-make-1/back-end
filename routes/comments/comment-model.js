@@ -1,8 +1,14 @@
 const db = require('../../config/dbConfig.js')
 module.exports = {
-    getComments
+    getComments,
+    addComment
 }
 
 function getComments() {
-    return null
+    return db('comments')
+}
+
+function addComment(comment) {
+    return db('comments')
+    .insert(comment)
 }
