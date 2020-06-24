@@ -1,0 +1,45 @@
+# Register new user
+POST https://co-make1.herokuapp.com/api/Register
+Content-Type: application/json
+
+{
+"username": "Amin", "password": "Amin"
+}
+
+### Login 
+POST https://co-make1.herokuapp.com/api/Login
+Content-Type: application/json
+
+# {
+# "username": "user", "password": "user"
+# }
+{
+"username": "admin", "password": "admin"
+}
+### Get users
+GET https://co-make1.herokuapp.com/api/account
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoyLCJ1c2VybmFtZSI6ImFkbWluIiwiZmlyc3RfbmFtZSI6IldlbGNvbWUgRmlyc3QgTmFtZSBBZG1pbiIsImlzX2FkbWluIjoxLCJpYXQiOjE1OTI3OTk1NTUsImV4cCI6MTU5MzQwNDM1NX0.LNbeXnuhwS3eVmgUfJxUVaeTNnDZtWOwuimwrxI9uFM
+
+### Get User by ID
+GET https://co-make1.herokuapp.com/api/account/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoyLCJ1c2VybmFtZSI6ImFkbWluIiwiZmlyc3RfbmFtZSI6IldlbGNvbWUgRmlyc3QgTmFtZSBBZG1pbiIsImlzX2FkbWluIjoxLCJpYXQiOjE1OTI3OTk1NTUsImV4cCI6MTU5MzQwNDM1NX0.LNbeXnuhwS3eVmgUfJxUVaeTNnDZtWOwuimwrxI9uFM
+
+###
+PUT https://co-make1.herokuapp.com/api/account/1
+Content-Type: application/application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoyLCJ1c2VybmFtZSI6ImFkbWluIiwiZmlyc3RfbmFtZSI6IldlbGNvbWUgRmlyc3QgTmFtZSBBZG1pbiIsImlzX2FkbWluIjoxLCJpYXQiOjE1OTI3OTk1NTUsImV4cCI6MTU5MzQwNDM1NX0.LNbeXnuhwS3eVmgUfJxUVaeTNnDZtWOwuimwrxI9uFM
+
+{
+      "username": "user1",
+      "password": "user",
+      "email": "user@email.com",
+      "first_name": "User",
+      "last_name": "Last Name User",
+      "is_admin": false
+    }
+
+###
+GET http://localhost:5000/api/issue
+Content-Type: application/application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoyLCJ1c2VybmFtZSI6ImFkbWluIiwiZmlyc3RfbmFtZSI6IldlbGNvbWUgRmlyc3QgTmFtZSBBZG1pbiIsImlzX2FkbWluIjoxLCJpYXQiOjE1OTI3OTk1NTUsImV4cCI6MTU5MzQwNDM1NX0.LNbeXnuhwS3eVmgUfJxUVaeTNnDZtWOwuimwrxI9uFM
+
