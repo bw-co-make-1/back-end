@@ -1,9 +1,6 @@
 const server = require('./server.js')
 const db = require('../config/dbConfig.js')
 const request = require('supertest')
-// const Users = require('../auth/auth-model.js')
-// const mockData = require('../config/mockData.js')
-
 
 describe('Server configuration', () => {
     test('Server is running', async () => {
@@ -26,9 +23,35 @@ describe('End Points', () => {
         expect(res.status).toEqual(401)
     })
 
+    test('Issues', async () => {
+        const allIssues = await db('issues')
+        const res = await request(server).get('/api/Issue')
+        expect(res.type).toEqual('application/json')
+        expect(allIssues).toHaveLength(0)
+        expect(res.status).toEqual(401)
+    })
+
+    test('Comments', async () => {
+        const allComments = await db('comments')
+        const res = await request(server).get('/api/Comment')
+        expect(res.type).toEqual('application/json')
+        expect(allComments).toHaveLength(0)
+        expect(res.status).toEqual(401)
+    })
+
+    test('Votes', async () => {
+        const allVotes = await db('votes')
+        const res = await request(server).get('/api/Vote')
+        expect(res.type).toEqual('application/json')
+        expect(allVotes).toHaveLength(0)
+        expect(res.status).toEqual(401)
+    })
 }
 )
 
+beforeEach(async () => {
+    await db('users').truncate();
+})
 
 // describe("insert()", () => {
 //     it("", () => { });
@@ -43,8 +66,3 @@ describe('End Points', () => {
 //         expect(users).toHaveLength(2);
 //     });
 // });
-
-
-// beforeEach(async () => {
-//     await db('users').truncate();
-// })
