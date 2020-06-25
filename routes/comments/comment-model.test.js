@@ -2,13 +2,13 @@ const db = require('../../config/dbConfig')
 const commentModel = require('./comment-model')
 
 const testCommentData = {
-    comment: 'This is a test comment from /routes/comments/comment-model.spec.js', 
+    comment: 'This is a test comment from /routes/comments/comment-model.test.js', 
     user_id: 1, 
     issue_id: 1 
 }
 
 const testCommentUpdateData = {
-    comment: 'This is an updated test comment from /routes/comments/comment-model.spec.js'
+    comment: 'This is an updated test comment from /routes/comments/comment-model.test.js'
 }
 
 describe("comment model", () => {
