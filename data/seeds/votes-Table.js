@@ -8,7 +8,8 @@ exports.seed = function(knex) {
         {
           id: 1, 
           upVoted: true, 
-          issue_id: 1
+          issue_id: 1,
+          user_id: 1
         }
       ]);
     });
