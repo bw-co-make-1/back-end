@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Issues = require('./issue-model.js')
 const isAdmin = require('../../middleware/isAdmin.js')
+const jwtDecode = require('jwt-decode')
 
 router.get('/', async (req, res) => {
    try{
@@ -15,9 +16,18 @@ router.get('/', async (req, res) => {
    }
 })
 
-router.post('/:userId', async(req, res)=>{
+router.post('/', async(req, res)=>{
     try {
-         await Issues.addIssue({ issue: req.body.issue, description: req.body.description, photo: req.body.photo, city: req.body.city, state: req.body.state, zip_code: req.body.zip_code,user_id: req.params.userId })
+        let decoded = jwtDecode(req.headers.authorization)
+        // console.log(decoded)
+        const { subject} = decoded
+         await Issues.addIssue({ issue: req.body.issue,
+             description: req.body.description,
+              photo: req.body.photo,
+               city: req.body.city,
+                state: req.body.state,
+                 zip_code: req.body.zip_code,
+                 user_id: subject })
         res.status(201).json({message:'New issue added'})
 
     }catch{
