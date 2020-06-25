@@ -1,5 +1,8 @@
 const server = require('./server.js')
+const db = require('../config/dbConfig.js')
 const request = require('supertest')
+// const Users = require('../auth/auth-model.js')
+// const mockData = require('../config/mockData.js')
 
 
 describe('Server configuration', () => {
@@ -13,3 +16,15 @@ describe('Server configuration', () => {
     })
 
 })
+
+describe('End Points', () => {
+    test('Accounts', async () => {
+        const allUsers = await db('users')
+        const res = await request(server).get('/api/account')
+        expect(res.type).toEqual('application/json')
+        expect(allUsers).toHaveLength(0)
+        expect(res.status).toEqual(401)
+    })
+
+}
+)
