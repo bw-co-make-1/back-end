@@ -7,6 +7,7 @@ function getVotesByIssue(issueId) {
 }
 
 async function addVote(issueId) {
+    voteData = 
   const [id] = await db("votes")
   .insert({
       upVoted: 'true'
