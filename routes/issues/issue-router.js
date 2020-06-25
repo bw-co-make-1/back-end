@@ -7,8 +7,8 @@ router.get('/', async (req, res) => {
        const found = await Issues.getIssue()
        if (found){
            res.status(200).json(found)
-       }else{
-           res.status(401).json({message: 'No issue to Display'})
+       } else {
+           res.status(204).json({message: 'No issue to Display'})
        }
    }catch{
        res.status(500).json({message: 'Error Loading Issues'})
