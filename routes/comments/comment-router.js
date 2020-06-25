@@ -4,10 +4,10 @@ const { isCommentOwner } = require('../../middleware/isOwner')
 
 
 // Get all comments for specified post
-router.get("/:issueId", ( req, res ) => {
+router.get("/:issueId", async ( req, res ) => {
     const { issueId } = req.params
 
-    Comments.getAllComments(postId)
+    await Comments.getAllComments(issueId)
     .then(comments => {
       res.status(200).json(comments)
     })

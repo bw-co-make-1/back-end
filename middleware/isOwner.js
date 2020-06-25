@@ -36,5 +36,7 @@ async function isIssueOwner(req, res, next) {
 }
 
 module.exports = {
-    isOwner
+    isCommentOwner,
+    isIssueOwner
+
 }
