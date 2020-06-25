@@ -3,7 +3,7 @@ const db = require('../../config/dbConfig')
 
 function getAllComments(issueId) {
   return db('comments')
-  .select('issue_id', issueId)
+  .where('issue_id', issueId)
 }
 
 function getSingleComment(id) {
@@ -13,35 +13,22 @@ function getSingleComment(id) {
 }
 
 async function postNewComment(newComment) {
-  try {
-    const [id] = await db('comments').insert(newComment, 'id')
-    
-    return getSingleComment({id})
-  } catch (error) {
-    throw error
-  }
+  const [id] = await db('comments').insert(newComment, 'id')
+  return getSingleComment(id)
 }
 
-async function putComment(commentId, commentData) {
-  try {
-    const [id] = await db('comments')
-    .where('id', commentId)
-    .update({commentData})
+async function putComment(id, commentData) {
+    await db('comments')
+    .where('id', id)
+    .update(commentData)
     
-    return getSingleComment({id})
-  } catch (error) {
-    throw error
-  }
+    return getSingleComment(id)
 }
 
 function deleteComment(commentId) {
-  try {
     return db('comments')
     .where('id', commentId)
     .del()
-  } catch (error) {
-    throw error
-  }
 }
 
 

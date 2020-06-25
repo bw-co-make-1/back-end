@@ -3,7 +3,7 @@ const secret = require('../config/secret.js')
 
 module.exports = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization;
 
     if (token) {
       jwt.verify(token, secret.jwtSecret, (error, decodedToken) => {
@@ -15,10 +15,10 @@ module.exports = (req, res, next) => {
         }
       })
     } else {
-      res.json({ message: 'Invalid authorization' })
+      res.status(401).json({ message: 'Unauthorized. Please login.' })
     }
   }
   catch {
-    res.status(401).json({ message:'You need to Login' })
+    res.status(401).json({ message:'Unauthorized. Please login.' })
   }
 }
