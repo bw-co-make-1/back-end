@@ -53,5 +53,22 @@ router.delete('/:id', isAdmin(1),async(req,res)=>{
         res.status(500).json({message: 'Error removing issue'})
     }
 })
+//update
+router.put('/:id', async(req,res)=>{
+    try{
+        const {id} =req.params
+        const changes = req.body
+        
+        const updatedIssue = await Issues.updateIssue(id, changes)
+        if (updatedIssue){
+            res.json({message: 'Issue Updated'})
+        }else{
+            res.json({message:'Unable to make changes'})
+        }
+    }
+    catch{
+        res.status(500).json({message:'Error making changes'})
+    }
+})
 
 module.exports = router
