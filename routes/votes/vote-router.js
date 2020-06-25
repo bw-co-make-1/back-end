@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Users = require('./vote-mode.js')
+// const Votes = require('./vote-mode.js')
 
 router.get('/vote', async (req, res) => {
    
