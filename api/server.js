@@ -9,6 +9,7 @@ const votesRouter = require('../routes/votes/vote-router')
 const restricted = require('../middleware/restricted.js')
 const isAdmin = require('../middleware/isAdmin.js')
 const commentRouter = require('../routes/comments/comment-router.js')
+const voteRouter = require('../routes/votes/vote-router.js')
 
 const server = express();
 
