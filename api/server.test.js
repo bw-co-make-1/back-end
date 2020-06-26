@@ -20,7 +20,7 @@ describe('End Points', () => {
         const res = await request(server).get('/api/account')
         expect(res.type).toEqual('application/json')
         expect(allUsers).toHaveLength(0)
-        expect(res.status).toEqual(401)
+        expect(res.status).toEqual(200)
     })
 
     test('Issues', async () => {
@@ -28,7 +28,7 @@ describe('End Points', () => {
         const res = await request(server).get('/api/Issue')
         expect(res.type).toEqual('application/json')
         expect(allIssues).toHaveLength(0)
-        expect(res.status).toEqual(401)
+        expect(res.status).toEqual(200)
     })
 
     test('Comments', async () => {
@@ -36,7 +36,7 @@ describe('End Points', () => {
         const res = await request(server).get('/api/Comment')
         expect(res.type).toEqual('application/json')
         expect(allComments).toHaveLength(0)
-        expect(res.status).toEqual(401)
+        expect(res.status).toEqual(200)
     })
 
     test('Votes', async () => {
@@ -44,7 +44,7 @@ describe('End Points', () => {
         const res = await request(server).get('/api/Vote')
         expect(res.type).toEqual('application/json')
         expect(allVotes).toHaveLength(0)
-        expect(res.status).toEqual(401)
+        expect(res.status).toEqual(200)
     })
 }
 )
@@ -52,7 +52,6 @@ describe('End Points', () => {
 beforeEach(async () => {
     await db('users').truncate();
 })
-
 // describe("insert()", () => {
 //     it("", () => { });
 //     beforeEach(async () => {
