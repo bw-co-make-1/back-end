@@ -4,10 +4,10 @@ exports.up = async function(knex) {
       comment.increments();
       comment.string("comment").notNullable();
       comment.integer("user_id")
-      .notNullable()
+      // .notNullable()
       // .unsigned()
-      .references("id")
-      .inTable("users")
+      // .references("id")
+      // .inTable("users")
       // .onUpdate("CASCADE")
       // .onDelete("CASCADE");
       comment.integer("issue_id")
