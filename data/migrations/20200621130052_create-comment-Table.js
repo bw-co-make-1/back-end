@@ -5,7 +5,7 @@ exports.up = async function(knex) {
       comment.string("comment").notNullable();
       comment.integer("user_id")
       .notNullable()
-      .unsigned()
+      // .unsigned()
       .references("id")
       .inTable("users")
       // .onUpdate("CASCADE")
