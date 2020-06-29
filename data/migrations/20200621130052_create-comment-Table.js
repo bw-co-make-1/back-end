@@ -8,8 +8,8 @@ exports.up = async function(knex) {
       .unsigned()
       .references("id")
       .inTable("users")
-      .onUpdate("CASCADE")
-      .onDelete("CASCADE");
+      // .onUpdate("CASCADE")
+      // .onDelete("CASCADE");
       comment.integer("issue_id")
       .notNullable()
       .unsigned()
