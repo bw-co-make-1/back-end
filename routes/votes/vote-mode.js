@@ -3,6 +3,8 @@ module.exports = {
     getVote
 }
 
-function getVote() {
-    return null
+async function getVote(issueId) {
+    return await db('votes')
+    .where('issue_id', issueId)
+    .andWhere('upVoted', true)
 }
