@@ -36,7 +36,7 @@ router.get('/:issue_id', async (req, res) => {
 router.get('/', async(req, res)=>{
     try{
         const found = await Comments.getComments()
-        if (found){
+        if (found.length > 0){
             res.status(200).json(found)
         }else{
             res.status(401).json({message: 'No Comment to Display'})
