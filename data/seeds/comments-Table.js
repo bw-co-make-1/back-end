@@ -6,7 +6,7 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('comments').insert([
         {
-          comment: 'An expert maintenance team needed to fix this issue', user_id:1, issue_id: 1
+          comment: 'An expert maintenance team needed to fix this issue', issue_id: 1 , user_id: 1
         }
       ]);
     });
