@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params
     try {
         const found = await Issues.byId(id)
-        if (found.length > 0) {
+        if (found) {
             res.status(200).json(found)
         } else {
             res.status(404).json('No Issue found.')
