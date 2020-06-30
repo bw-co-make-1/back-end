@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Comments = require('./comment-model.js')
-const jwtDecode = require('jwt-decode')
+const jwtDecode = require('jsonwebtoken')
 
 
 //Post new issue with user information
