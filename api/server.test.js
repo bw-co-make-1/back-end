@@ -6,10 +6,12 @@ const db = require('../config/dbConfig.js')
 const accountData = require('../data/dummyData/account.js')
 const issueData = require('../data/dummyData/issue.js')
 const commentData = require('../data/dummyData/comment.js')
+const voteData = require('../data/dummyData/vote.js')
 
 const Accounts = require('../routes/auth/auth-model.js')
 const Issues = require('../routes/issues/issue-model.js')
 const Comments = require('../routes/comments/comment-model.js')
+const Votes = require('../routes/votes/vote-mode.js')
 
 describe('Server configuration', () => {
     test('Server is running', async () => {
@@ -100,8 +102,23 @@ describe('Comments', () => {
     });
 });
 
+describe('Votes', () => {
+    
+    it("Should insert Votes to the DB", async () => {
+        await Votes.getVote(voteData[0]);
+        const vote = await db("votes");
+        expect(vote).toHaveLength(0);
+    });
+
+    it("Should Get votes information frm DB", async () => {
+        const vote = await db("votes");
+        expect(vote).toHaveLength(0);
+    });
+});
+
 beforeEach(async () => {
     await db('users').truncate();
     await db('issues').truncate()
     await db('comments').truncate()
+    await db('votes').truncate()
 })
