@@ -10,6 +10,13 @@ exports.up = async function(knex) {
       .inTable("issues")
       .onUpdate("CASCADE")
       .onDelete("CASCADE");
+      vote.integer("user_id")
+      .notNullable()
+      .unsigned()
+      .references("id")
+      .inTable("users")
+      .onUpdate("CASCADE")
+      .onDelete("CASCADE");
     });
 }
 exports.down = async function(knex) {

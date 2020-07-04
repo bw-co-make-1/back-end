@@ -1,7 +1,12 @@
 const router = require('express').Router();
 const Issues = require('./issue-model.js')
 const isAdmin = require('../../middleware/isAdmin.js')
-const jwtDecode = require('jwt-decode')
+const {isIssueOwner} =  require('../../middleware/isOwner.js')
+const jwtDecode = require('jwt-decode');
+const validateId = require('../../middleware/validations/validateId.js');
+const validatePOST = require('../../middleware/validations/validatePOST.js');
+const validateIssue = require('../../middleware/validations/validateIssue.js');
+
 
 router.get('/', async (req, res) => {
    try{
@@ -16,7 +21,7 @@ router.get('/', async (req, res) => {
    }
 })
 
-router.post('/', async(req, res)=>{
+router.post('/', validateIssue,validatePOST,async(req, res)=>{
     try {
         let decoded = jwtDecode(req.headers.authorization)
         // console.log(decoded)
@@ -35,7 +40,7 @@ router.post('/', async(req, res)=>{
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateId,async (req, res) => {
     const { id } = req.params
     try {
         const found = await Issues.byId(id)
@@ -50,7 +55,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', isAdmin(1),async(req,res)=>{
+router.delete('/:id', validateId,isIssueOwner,async(req,res)=>{
     try{
         const {id} = req.params
         const deleted = await Issues.deleteIssue(id)
@@ -64,7 +69,7 @@ router.delete('/:id', isAdmin(1),async(req,res)=>{
     }
 })
 //update
-router.put('/:id', async(req,res)=>{
+router.put('/:id', isIssueOwner,validateId,async(req,res)=>{
     try{
         const {id} =req.params
         const changes = req.body

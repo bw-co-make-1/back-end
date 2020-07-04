@@ -1,10 +1,15 @@
 const router = require('express').Router();
 const Comments = require('./comment-model.js')
-const jwtDecode = require('jwt-decode')
+const {isCommentOwner} = require('../../middleware/isOwner.js')
+const jwtDecode = require('jwt-decode');
+const validateId = require('../../middleware/validations/validateId.js');
+const validatePOST = require('../../middleware/validations/validatePOST.js');
+const validateComment = require('../../middleware/validations/validateComment.js');
+
 
 
 //Post new issue with user information
-router.post('/:issue_id', async(req, res)=>{
+router.post('/:issue_id', validateComment,validatePOST,validateId,async(req, res)=>{
     try {
         let decoded = jwtDecode(req.headers.authorization)
     // console.log(decoded)
@@ -18,11 +23,11 @@ router.post('/:issue_id', async(req, res)=>{
     }
 })
 //Get comments by Issue Id
-router.get('/:issue_id', async (req, res) => {
+router.get('/:issue_id', validateId,async (req, res) => {
     const { issue_id } = req.params
     try {
         const found = await Comments.byId(issue_id)
-        if (found.length > 0) {
+        if (found.length >0) {
             res.status(200).json(found)
         } else {
             res.status(404).json('No Comment found.')
@@ -45,8 +50,27 @@ router.get('/', async(req, res)=>{
         res.status(500).json({message: 'Error Loading Comment'})
     }
 })
+
+//Update
+
+router.put('/:id', isCommentOwner,validateId,async(req,res)=>{
+    try{
+        const {id} =req.params
+        const changes = req.body
+        
+        const updatedComment = await Comments.updateComment(id, changes)
+        if (updatedComment){
+            res.json({message: 'Comment Updated'})
+        }else{
+            res.json({message:'Unable to make changes'})
+        }
+    }
+    catch{
+        res.status(500).json({message:'Error making changes'})
+    }
+})
 //Delete comment using comment id
-router.delete('/:id', async(req, res)=>{
+router.delete('/:id', isCommentOwner,validateId,async(req, res)=>{
     try{
         const {id} = req.params
         const deleted = await Comments.removeComment(id)

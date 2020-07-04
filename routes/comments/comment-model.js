@@ -3,7 +3,9 @@ module.exports = {
     getComments,
     addComment,
     byId,
-    removeComment
+    removeComment,
+    updateComment,
+    getSingleComment
 }
 
 function getComments() {
@@ -23,6 +25,17 @@ function byId(id){
      'I.issue',
      'C.comment'
       )
+}
+
+function getSingleComment(id) {
+    return db('comments')
+    .where({id})
+    .first()
+  }
+function updateComment(id, changes) {
+    return db('comments')
+    .where({id})
+    .update(changes)
 }
 
 function removeComment(id) {

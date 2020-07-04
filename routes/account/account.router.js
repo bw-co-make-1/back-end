@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Users = require('./account-model.js')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const validateId = require('../../middleware/validations/validateId.js');
 
 router.get('/', async (req, res) => {
     try {
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async(req, res)=>{
+router.get('/:id',validateId, async(req, res)=>{
     try{
         const {id} = req.params
         const user = await Users.getById(id)
@@ -31,7 +32,7 @@ router.get('/:id', async(req, res)=>{
     }
 })
 
-router.put('/:id', async(req,res)=>{
+router.put('/:id', validateId,async(req,res)=>{
     try{
         const {id} =req.params
         const changes = req.body
@@ -49,7 +50,7 @@ router.put('/:id', async(req,res)=>{
     }
 })
 
-router.delete("/:id",  async (req, res) => {
+router.delete("/:id",  validateId,async (req, res) => {
     try {
       const { id } = req.params;
       const deleted = await Users.removeAccount(id)

@@ -8,11 +8,11 @@ function generateToken(user) {
     const payload = {
         subject: user.id,
         username: user.username,
-        first_name: `Welcome ${user.first_name}`,
+        first_name: user.first_name,
         is_admin: user.is_admin
     }
     const options = {
-        expiresIn: "7d"
+        expiresIn: "10d"
     };
 
     return jwt.sign(payload, secret.jwtSecret, options)

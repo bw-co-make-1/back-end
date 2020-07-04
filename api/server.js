@@ -6,10 +6,11 @@ const helmet = require('helmet');
 const authRouter = require('../routes/auth/auth-router.js')
 const userRouter = require('../routes/account/account.router.js')
 const issueRouter = require('../routes/issues/issue-router.js')
-const restricted = require('../middleware/restricted.js')
-const isAdmin = require('../middleware/isAdmin.js')
 const commentRouter = require('../routes/comments/comment-router.js')
 const voteRouter = require('../routes/votes/vote-router.js')
+
+const restricted = require('../middleware/restricted.js')
+const isAdmin = require('../middleware/isAdmin.js')
 
 const server = express();
 
@@ -28,4 +29,7 @@ server.get('/', (req, res) => {
     res.status(200).json('Server is running...')
 })
 
+server.use((req, res)=> {
+    res.status(404).send('Incorrect URL 😔');
+});
 module.exports = server;

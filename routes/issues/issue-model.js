@@ -4,9 +4,15 @@ module.exports = {
     addIssue,
     updateIssue,
     deleteIssue,
-    byId
+    byId,
+    getSingleIssue
 }
 
+function getSingleIssue(id) {
+    return db('issues')
+    .where({id})
+    .first()
+  }
 function getIssue() {
     return db('issues as I')
     .join('users as U', 'U.id','I.user_id'  )

@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const Users = require('./auth-model.js')
 const JwToken = require('../../config/jwToken.js')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const validatePOST = require('../../middleware/validations/validatePOST.js');
+const validateLogin = require('../../middleware/validations/validateLogin.js');
 
-router.post('/Register', async (req, res) => {
+router.post('/Register', validatePOST,async (req, res) => {
   const user = req.body
   const hash = bcrypt.hashSync(user.password, 10)
   user.password = hash
@@ -20,7 +22,7 @@ router.post('/Register', async (req, res) => {
   }
 })
 
-router.post('/Login', async (req, res) => {
+router.post('/Login'  ,validateLogin,async (req, res) => {
   let { username, password } = req.body
   try {
     const user = await Users.findBy({ username }).first()

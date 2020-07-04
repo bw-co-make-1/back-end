@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     if (token) {
       jwt.verify(token, secret.jwtSecret, (error, decodedToken) => {
         if (error) {
-          res.status(401).json({ message: 'Your are not allowed to touch it' })
+          res.status(401).json({ message: 'Your are not allowed to touch it, Please login' })
         } else {
           req.decodedJwt = decodedToken
           next();

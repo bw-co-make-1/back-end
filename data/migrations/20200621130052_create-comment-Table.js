@@ -9,16 +9,16 @@ exports.up = async function(knex) {
       .unsigned()
       .references("id")
       .inTable("issues")
-      // .onUpdate("CASCADE")
-      // .onDelete("CASCADE");
+      .onUpdate("CASCADE")
+      .onDelete("CASCADE");
     comments
       .integer("user_id")
       .notNullable()
       .unsigned()
       .references("id")
       .inTable("users")
-      // .onUpdate("CASCADE")
-      // .onDelete("CASCADE");
+      .onUpdate("CASCADE")
+      .onDelete("CASCADE");
     comments.timestamp("created_at").defaultTo(knex.fn.now());
   });
 };

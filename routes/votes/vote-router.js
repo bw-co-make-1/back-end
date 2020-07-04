@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const Votes = require('./vote-mode.js');
+const validateId = require('../../middleware/validations/validateId.js');
 
-router.get('/:issueId', async (req, res) => {
+
+router.get('/:issueId',validateId, async (req, res) => {
    try{
        const {issueId} = req.params
        const found = await Votes.getVote(issueId)
