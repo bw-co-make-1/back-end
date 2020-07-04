@@ -20,7 +20,7 @@ server.use(cors());
 
 
 server.use('/api', authRouter);
-server.use('/api/account', restricted, isAdmin(1) ,userRouter)
+server.use('/api/account', restricted, isAdmin() ,userRouter)
 server.use('/api/Issue', restricted, issueRouter)
 server.use('/api/Comment', restricted, commentRouter)
 server.use('/api/vote', restricted, voteRouter)
